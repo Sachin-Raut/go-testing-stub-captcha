@@ -1,0 +1,1 @@
+# go-testing-stub-captcha
