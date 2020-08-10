@@ -7,6 +7,18 @@ import (
 	"github.com/Sachin-Raut/go-testing-stub-captcha/captcha"
 )
 
+type stubChallenger string
+
+func (c stubChallenger) Challenge() (image.Image, string) {
+	return image.NewRGBA(image.Rect(0, 0, 100, 100)), string(c)
+}
+
+type stubPrompter string
+
+func (p stubPrompter) Prompt(_ image.Image) string {
+	return string(p)
+}
+
 func TestChallengeUserSuccess(t *testing.T) {
 	got := captcha.ChallengeUser(stubChallenger("42"), stubPrompter("42"))
 	if got != true {
@@ -19,16 +31,4 @@ func TestChallengeUserFail(t *testing.T) {
 	if got != false {
 		t.Fatal("expected ChallengeUser to return false")
 	}
-}
-
-type stubChallenger string
-
-func (c stubChallenger) Challenge() (image.Image, string) {
-	return image.NewRGBA(image.Rect(0, 0, 100, 100)), string(c)
-}
-
-type stubPrompter string
-
-func (p stubPrompter) Prompt(_ image.Image) string {
-	return string(p)
 }
